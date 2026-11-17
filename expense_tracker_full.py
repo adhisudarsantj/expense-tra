@@ -4,12 +4,12 @@ from datetime import date, datetime
 
 import mysql.connector
 
-try:  # optional calendar popup: python -m pip install tkcalendar
+try: 
     from tkcalendar import DateEntry
 except ImportError:
     DateEntry = None
 
-# ---- Change these to match your MySQL setup ----
+
 DB_CONFIG = {
     "host": "localhost",
     "user": "root",
@@ -19,7 +19,7 @@ DB_NAME = "expense_db"
 DEFAULT_CATEGORIES = ["Food", "Transport", "Education", "Shopping", "Entertainment", "Others"]
 
 
-# ======================= DATABASE =======================
+
 class Database:
     def __init__(self):
         server = mysql.connector.connect(**DB_CONFIG)
@@ -104,7 +104,7 @@ class Database:
         return t
 
 
-# ======================= HELPERS =======================
+
 def make_date_widget(parent, var):
     if DateEntry:
         return DateEntry(parent, textvariable=var, date_pattern="yyyy-mm-dd", width=14)
@@ -145,7 +145,7 @@ def make_tree(parent, height=12):
     return tree
 
 
-# ======================= APP =======================
+
 class App(tk.Tk):
     def __init__(self, db):
         super().__init__()
@@ -164,7 +164,7 @@ class App(tk.Tk):
         self.nb.bind("<<NotebookTabChanged>>", lambda e: self.refresh_all())
         self.refresh_all()
 
-    # ---------- Dashboard ----------
+
     def build_dashboard(self):
         f = ttk.Frame(self.nb, padding=12)
         self.nb.add(f, text="Dashboard")
@@ -192,7 +192,7 @@ class App(tk.Tk):
         )
         fill_tree_tagged(self.dash_tree, self.db.recent(10))
 
-    # ---------- Income / Expense forms ----------
+
     def build_form(self, ttype):
         f = ttk.Frame(self.nb, padding=20)
         self.nb.add(f, text=f"Add {ttype}")
@@ -250,7 +250,7 @@ class App(tk.Tk):
         messagebox.showinfo("Saved", f"{ttype} saved.")
         self.refresh_all()
 
-    # ---------- Transactions ----------
+
     def build_transactions(self):
         f = ttk.Frame(self.nb, padding=12)
         self.nb.add(f, text="Transactions")
@@ -329,7 +329,7 @@ class App(tk.Tk):
 
         ttk.Button(pad, text="Save Changes", command=save).grid(row=4, column=1, sticky="w", pady=10)
 
-    # ---------- Refresh ----------
+
     def refresh_all(self):
         cats = self.db.categories()
         self.expense_form["combo"]["values"] = cats
