@@ -13,7 +13,7 @@ except ImportError:
 DB_CONFIG = {
     "host": "localhost",
     "user": "root",
-    "password": "Sana2206#",
+    "password": "your-password",
 }
 DB_NAME = "expense_db"
 DEFAULT_CATEGORIES = ["Food", "Transport", "Education", "Shopping", "Entertainment", "Others"]
